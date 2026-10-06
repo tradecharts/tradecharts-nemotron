@@ -1,0 +1,20 @@
+{
+  "name": "tradecharts-nemotron",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Open engine surface: Nemotron proposes the wave count, a deterministic validator gates it. CLI + optional HTTP mode. Not the desk.",
+  "scripts": {
+    "build": "tsc -b",
+    "test": "vitest run",
+    "wavecount": "tsc -b && node dist/cli.js"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.9.0",
+    "vitest": "^3.0.0"
+  },
+  "dependencies": {
+    "undici": "^8.11.2"
+  }
+}

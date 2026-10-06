@@ -1,0 +1,4 @@
+node_modules/
+dist/
+.env
+wave-debug.json
