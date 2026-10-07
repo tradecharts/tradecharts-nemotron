@@ -1,0 +1,21 @@
+{
+  "bnb-usd-1w.csv": [
+    "rejected"
+  ],
+  "btc-usd-1w.csv": [
+    "rejected",
+    "flagged",
+    "valid"
+  ],
+  "doge-usd-1w.csv": [
+    "abstain",
+    "rejected"
+  ],
+  "eth-usd-1w.csv": [
+    "abstain",
+    "rejected"
+  ],
+  "sol-usd-1w.csv": [
+    "rejected"
+  ]
+}

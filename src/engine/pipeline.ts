@@ -25,7 +25,7 @@ export async function runPipeline(provider: ModelProvider, packet: MeasurePacket
       { role: "user", content: buildClassifyPrompt(renderFacts(packet)) },
     ],
     maxTokens: 16384,
-    reasoningBudget: 4096,
+    reasoningBudget: 2048,
   });
 
   let parsed: Record<string, unknown> | null = null;

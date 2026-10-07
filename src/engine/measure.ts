@@ -84,6 +84,26 @@ export function measure(bars: Bar[], k = 3.5, symbol = "", timeframe = ""): Meas
   };
 }
 
+/** Impulse arithmetic per 6-swing window (desk impulseCandidates, simplified):
+ *  the model classifies FROM this table — it never re-derives wave relations. */
+function impulseWindows(sw: Swing[]): string {
+  const lines: string[] = ["Impulse arithmetic (wave lengths in price, per 6-swing window):"];
+  const windows: string[] = [];
+  for (let i = 0; i + 5 < sw.length; i++) {
+    const w = sw.slice(i, i + 6);
+    const L = [1, 2, 3, 4, 5].map(k => Math.abs(w[k].price - w[k - 1].price));
+    const w3Longest = L[2] >= L[0] && L[2] >= L[4];
+    const w2ok = L[1] < L[0];
+    const w4ok = L[3] < L[2];
+    windows.push(`  [${w[0].n}]-[${w[5].n}]: 2/1 ${(L[1] / L[0] * 100).toFixed(0)}% · 3/1 ${(L[2] / L[0]).toFixed(2)}x · 4/3 ${(L[3] / L[2]).toFixed(2)}x · 5/1 ${(L[4] / L[0]).toFixed(2)}x → ${w3Longest && w2ok && w4ok ? "VALID impulse window" : "no (w3 " + (w3Longest ? "ok" : "shortest") + ", w2 " + (w2ok ? "ok" : "deep") + ", w4 " + (w4ok ? "ok" : "deep") + ")"}`);
+  }
+  lines.push(...windows.slice(-3));
+  if (!windows.some(w => w.includes("VALID impulse window"))) {
+    lines.push("  → NO valid impulse window in range: the recent leg is a three (or diagonal), not a five.");
+  }
+  return lines.join("\n");
+}
+
 /** Numbered swings + range Fib — the deterministic facts the model classifies from. */
 export function renderFacts(p: MeasurePacket, maxSwings = 15): string {
   const span = p.range.high - p.range.low || 1;
@@ -92,9 +112,9 @@ export function renderFacts(p: MeasurePacket, maxSwings = 15): string {
   const omitted = p.swings.length - shown.length;
   lines.push(`${p.symbol} ${p.timeframe} — ${p.bars.length} bars. Deterministic zigzag swings (showing last ${shown.length}${omitted ? `, ${omitted} earlier omitted` : ""}):`);
   for (const s of shown) {
-    const retrace = ((p.range.high - s.price) / span * 100).toFixed(0);
-    lines.push(`[${s.n}] ${s.t} ${s.anchor} ${trim(s.price)} (range retrace ${retrace}%)`);
+    lines.push(`[${s.n}] ${s.t} ${s.anchor} ${trim(s.price)} @${s.time}`);
   }
+  lines.push(impulseWindows(shown));
   lines.push(`Working range: high ${trim(p.range.high)} (${p.range.highT}) · low ${trim(p.range.low)} (${p.range.lowT}).`);
   lines.push(`Fib of range: 0.236 ${trim(p.range.high - span * 0.236)} · 0.382 ${trim(p.range.high - span * 0.382)} · 0.5 ${trim(p.range.high - span * 0.5)} · 0.618 ${trim(p.range.high - span * 0.618)} · 0.786 ${trim(p.range.high - span * 0.786)}.`);
   lines.push(`Last bar ${p.last.t} close ${trim(p.last.c)}.`);

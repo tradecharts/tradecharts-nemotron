@@ -36,12 +36,12 @@ export interface ModelProvider {
   complete(req: CompletionRequest): Promise<CompletionResponse>;
 }
 
-// Shared omni workers throw 503 ResourceExhausted under load; back off and retry.
+// Shared omni workers throw 503 ResourceExhausted and long prompts trip 504s; back off and retry.
 async function fetchWithRetry(url: string, init: RequestInit, attempts = 3): Promise<Response> {
   let last: Response | undefined;
   for (let i = 1; i <= attempts; i++) {
     const res = await fetch(url, init);
-    if (res.status !== 503 || i === attempts) return res;
+    if ((res.status !== 503 && res.status !== 504) || i === attempts) return res;
     await new Promise(r => setTimeout(r, 8000 * i));
     last = res;
   }
