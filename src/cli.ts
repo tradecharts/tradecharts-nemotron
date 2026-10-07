@@ -27,7 +27,14 @@ const bars = parseCsv(readFileSync(csv, "utf8"));
 if (bars.length < 20) { console.error(`${csv}: need ≥ 20 bars, got ${bars.length}`); process.exit(1); }
 
 const packet = measure(bars, undefined, symbol, timeframe);
-const verdict = await runPipeline(provider, packet);
+let verdict;
+try {
+  verdict = await runPipeline(provider, packet, { samples: 2 });
+} catch (e) {
+  console.error(`provider unavailable (${String((e as Error).message).slice(0, 90)})`);
+  console.error("no verdict — nothing drawn. Retry when the endpoint frees up.");
+  process.exit(3);
+}
 
 if (args.json) {
   console.log(JSON.stringify({ verdict, facts: { swings: packet.swings.length, range: packet.range, last: packet.last } }, null, 2));

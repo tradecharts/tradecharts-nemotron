@@ -18,7 +18,30 @@ export type Verdict = {
   model: string;
 };
 
-export async function runPipeline(provider: ModelProvider, packet: MeasurePacket): Promise<Verdict> {
+export async function runPipeline(
+  provider: ModelProvider,
+  packet: MeasurePacket,
+  opts: { samples?: number } = {},
+): Promise<Verdict> {
+  // Desk doctrine: the model runs more than once, the desk judges. Low
+  // temperature + two samples keeps a passing count passing on camera.
+  const samples = Math.max(1, opts.samples ?? 1);
+  const attempts: Verdict[] = [];
+  for (let i = 0; i < samples; i++) {
+    attempts.push(await classifyOnce(provider, packet, i > 0 ? 0.2 : 0.2));
+  }
+  return attempts.reduce((best, v) => (rank(v) < rank(best) ? v : best));
+}
+
+/** valid > flagged > rejected > abstain; then fewer violations wins. */
+function rank(v: Verdict): number {
+  if (v.proposal?.status === "unresolved") return 30 + v.violations.length;
+  if (v.severity === "valid") return 0 + v.violations.length;
+  if (v.severity === "flagged") return 10 + v.violations.length;
+  return 20 + v.violations.length;
+}
+
+async function classifyOnce(provider: ModelProvider, packet: MeasurePacket, temperature: number): Promise<Verdict> {
   const completion = await provider.complete({
     messages: [
       { role: "system", content: CLASSIFY_SYSTEM },
@@ -26,6 +49,7 @@ export async function runPipeline(provider: ModelProvider, packet: MeasurePacket
     ],
     maxTokens: 16384,
     reasoningBudget: 2048,
+    temperature,
   });
 
   let parsed: Record<string, unknown> | null = null;
