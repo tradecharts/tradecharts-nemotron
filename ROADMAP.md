@@ -13,7 +13,7 @@ The engine's core is done and proven live. This is the path to a hardened, stand
 
 ## Next
 
-- [ ] **Compliance pass** — run the example tapes on the Nebius provider (endpoint + model id from the Nebius catalog); the released demo runs on Nebius
+- [x] **Compliance pass** — verified 2026-10-08: `api.studio.nebius.com/v1`, `nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B`, matrix green twice, BTC flagged pass on the submission path
 - [x] **Third outcome** — landed Oct 6: BTC weekly → **flagged** (advisories only). Full spectrum in one matrix: abstain · rejected-with-named-violations · flagged pass
 - [ ] **Integration fixtures** — recorded model responses replayed through the parser + gate, no network
 - [x] **End-to-end script** — `npm run e2e`: every example tape → expected verdict class (allow-lists in `e2e-expected.json`); nonzero exit on drift
@@ -27,7 +27,7 @@ The engine's core is done and proven live. This is the path to a hardened, stand
 | L1 unit | validator rules (72 tests) | ✅ green |
 | L2 integration | JSON extraction + coercion + gate wiring, from fixtures | planned |
 | L3 live E2E | full pipeline vs the dev provider, per-tape verdict classes | ✅ e2e.mjs + expected allow-lists |
-| L4 compliance E2E | full pipeline vs Nebius, captured for the writeup | planned |
-| L5 standalone | fresh clone, no local state, works end to end | planned |
+| L4 compliance E2E | full pipeline vs Nebius, captured for the writeup | ✅ green twice 2026-10-08 (`e2e-expected.nebius.json`) |
+| L5 standalone | fresh clone, no local state, works end to end | ✅ passed 2026-10-07 |
 
 The invariant under test at every layer: **the model proposes, the rules gate — nothing invalid reaches the output.**
