@@ -20,7 +20,8 @@ if (!apiKey) { console.error(`Missing ${which === "nebius" ? "NEBIUS_API_KEY" : 
 const provider = which === "nebius" ? nebiusProvider(apiKey) : nvidiaProvider(apiKey);
 
 let expected = {};
-try { expected = JSON.parse(readFileSync(resolve(root, "e2e-expected.json"), "utf8")); } catch { /* first run records */ }
+const expectedFile = which === "nebius" ? "e2e-expected.nebius.json" : "e2e-expected.json";
+try { expected = JSON.parse(readFileSync(resolve(root, expectedFile), "utf8")); } catch { /* first run records */ }
 
 const csvs = readdirSync(resolve(root, "examples")).filter(f => f.endsWith(".csv")).sort();
 let drift = 0;

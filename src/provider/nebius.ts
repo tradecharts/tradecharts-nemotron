@@ -3,8 +3,8 @@
 
 import { openAICompatibleProvider, type ModelProvider } from "./index.js";
 
-export const NEBIUS_BASE_URL = "https://api.studio.nebius.com/v1"; // confirm in console when account exists
-export const NEBIUS_DEFAULT_MODEL = "nvidia/nemotron-3-nano-30b-a3b-reasoning"; // Nemotron served by Nebius; exact id from their catalog
+export const NEBIUS_BASE_URL = "https://api.studio.nebius.com/v1"; // verified live 2026-10-08
+export const NEBIUS_DEFAULT_MODEL = "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B"; // from their /v1/models 2026-10-08 (no omni on Nebius)
 
 export function nebiusProvider(apiKey: string, baseUrl = NEBIUS_BASE_URL): ModelProvider {
   return openAICompatibleProvider({

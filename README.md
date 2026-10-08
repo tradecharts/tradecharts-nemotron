@@ -13,10 +13,10 @@ Two companies, same models, different jobs. **Only Nebius counts for the hackath
 
 | Provider | Endpoint | Use |
 |---|---|---|
-| `nebius` | Nebius AI Cloud (OpenAI-compatible) | ✅ **The submitted demo runs on this** — rules require Nebius |
+| `nebius` | `api.studio.nebius.com/v1` — verified live 2026-10-08 | ✅ **The submitted demo runs on this** — rules require Nebius. `nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B`, 11–42 s per count, compliance matrix green twice |
 | `nvidia` | `integrate.api.nvidia.com` | ❌ Not the submission path. Development, tests, and the desk's BYOK provider feature |
 
-Same OpenAI-compatible dialect behind one interface (`src/provider/`) — switching is two env vars (`WAVECOUNT_PROVIDER=nebius NEBIUS_API_KEY=...`), zero code changes. The engine never knows which one is behind it.
+Nebius serves no omni — their text nano is the compliant default (needs the full 16k token budget: reasoning runs in its own channel before content). Same OpenAI-compatible dialect behind one interface (`src/provider/`) — switching is two env vars (`WAVECOUNT_PROVIDER=nebius NEBIUS_API_KEY=...`), zero code changes. The engine never knows which one is behind it.
 
 ### Model notes (probed live, 2026-10-06)
 
@@ -77,6 +77,7 @@ CSV tape ──▶ measure (ATR zigzag swings, range Fib, impulse-arithmetic tab
 | Layer | What | Status |
 |---|---|---|
 | Unit | validator rules — 72 tests, unmodified production copy | ✅ `npm test` |
+| Compliance E2E | the same matrix on `WAVECOUNT_PROVIDER=nebius` (allow-lists in `e2e-expected.nebius.json`) | ✅ green twice, 2026-10-08 |
 | E2E matrix | every example tape through the live pipeline; per-tape expected classes in `e2e-expected.json` (allow-lists absorb model nondeterminism; the asserted invariant is that **no invalid count is ever accepted**) | `npm run e2e` |
 | CI | tsc + vitest on every push | `.github/workflows/ci.yml` |
 
