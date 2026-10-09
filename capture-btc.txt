@@ -1,0 +1,7 @@
+BTC-USD 1W · 300 bars · 14 swings · nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B via nebius
+severity: flagged (rule_violation)
+pattern: zigzag · weekly · weekly zigzag
+violations:
+  - F7: Wave + Fib are one proof. Off-catalog or unmeasured: B/A 109.6% off-catalog; C/A 129.5%.
+  - S5: Map is a local sketch. Label both working-range extremes (2025-10-06 126199.63 and 2022-11-21 15476) or span most of that range.
+  - S12: Macro layer needs a full motive (1–5) or corrective (A-B-C) of the larger degree.

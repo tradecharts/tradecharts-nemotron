@@ -1,0 +1,9 @@
+BNB-USD 1W · 300 bars · 14 swings · nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B via nebius
+severity: rejected (rule_violation)
+pattern: impulse · weekly · weekly impulse from 500 low
+violations:
+  - H2: Wave 4 overlaps wave 1 in a cash impulse.
+  - S7: Waves 2 and 4 do not alternate (both deep or both shallow).
+  - A1: Wave 4 overlapped wave 1. Name diagonal, triangle, or ABC — do not leave this as impulse.
+  - F7: Wave + Fib are one proof. Off-catalog or unmeasured: 2/1 97.0%; 3/1 374.2% off-catalog; 4/3 96.5% off-catalog; 5 117.5%.
+  - S12: Elliott is fractal. Emit macro pivots for the larger motive/corrective, or say in reason that this lock is the macro.

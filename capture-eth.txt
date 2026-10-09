@@ -1,0 +1,5 @@
+ETH-USD 1W · 300 bars · 29 swings · nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B via nebius
+severity: flagged (rule_violation)
+pattern: zigzag · weekly · weekly zigzag from ATH
+violations:
+  - S12: Elliott is fractal. Emit macro pivots for the larger motive/corrective, or say in reason that this lock is the macro.
