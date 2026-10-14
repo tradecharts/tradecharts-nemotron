@@ -11,6 +11,21 @@ Built for the **Nebius x NVIDIA Global AI Hackathon** (track: Best Apps and Agen
 
 **Demo video (2:37):** [youtu.be/GKrzD-3MAbQ](https://youtu.be/GKrzD-3MAbQ). An animated intro explains the problem and why we chose Nemotron; every model call after it is a live request to Token Factory, followed by a look at the live desk; the raw transcripts with completion ids are in [`evidence/2026-10-13/`](evidence/2026-10-13/).
 
+## The problem, in four pictures
+
+Stills from the demo video.
+
+<table>
+<tr>
+<td width="50%"><img src="docs/assets/intro-rules.png" alt="A clean five-wave count with the three hard Elliott rules lit up"><br><sub><b>1 · Elliott Wave has hard rules.</b> Wave 2 never falls below the start of wave 1, wave 3 is never the shortest, wave 4 never enters wave 1's territory.</sub></td>
+<td width="50%"><img src="docs/assets/intro-problem.png" alt="An AI model proposes an impulse whose wave 4 enters wave 1's zone, and it is drawn anyway"><br><sub><b>2 · The problem.</b> Ask an AI model to label a chart and it answers confidently, even when wave 4 drops into wave 1's zone. Most AI chart tools draw it anyway.</sub></td>
+</tr>
+<tr>
+<td width="50%"><img src="docs/assets/intro-nemotron.png" alt="Measured facts go into Nemotron 3 Nano on Nebius Token Factory; a JSON proposal comes out"><br><sub><b>3 · Why Nemotron.</b> An open NVIDIA model, small and fast enough to sample twice per count, served by Nebius Token Factory. It reads measured facts and names the pattern. It never draws on its own.</sub></td>
+<td width="50%"><img src="docs/assets/intro-gate.png" alt="Pipeline: price tape, measure, Nemotron on Token Factory, a 35-rule gate, a person"><br><sub><b>4 · The gate.</b> A rule-breaking count is stopped with the rule named and nothing drawn. A sound count passes with its flags, and a person decides.</sub></td>
+</tr>
+</table>
+
 ## Runs on Nebius Token Factory
 
 | | |
@@ -56,7 +71,9 @@ violations:
   - S12: Macro layer needs a full motive (1–5) or corrective (A-B-C) of the larger degree.
 ```
 
-The same session on BNB: Nemotron proposed a five-wave impulse and the gate **rejected** it — `H2: Wave 4 overlaps wave 1`, plus `S7`, `A1`, `F7`, `S12` ([`bnb.txt`](evidence/2026-10-13/bnb.txt)). Nothing is drawn for a rejected count. Exit codes: 0 valid / flagged / abstain · 2 rejected · 3 provider unavailable.
+The same session on BNB: Nemotron proposed a five-wave impulse and the gate **rejected** it — `H2: Wave 4 overlaps wave 1`, plus `S7`, `A1`, `F7`, `S12` ([`bnb.txt`](evidence/2026-10-13/bnb.txt)). Nothing is drawn for a rejected count. This is the run shown in the demo video:
+
+<p align="center"><img src="docs/assets/live-bnb.jpg" alt="Live BNB-USD weekly run on Nebius Token Factory: two traced Nemotron calls with completion ids, then the gate rejects the impulse with H2, S7, A1, F7 and S12 named" width="860"></p> Exit codes: 0 valid / flagged / abstain · 2 rejected · 3 provider unavailable.
 
 ## How it works
 
@@ -120,11 +137,18 @@ examples/        real weekly tapes (ETH, BTC, BNB, SOL, DOGE)
 evidence/        recorded live runs
 ```
 
-## Relationship to TradeCharts
+## The live desk: tradecharts.app
 
-[TradeCharts](https://tradecharts.app) is a live commercial charting desk. Its Propose action runs the same validator gate this repo publishes; its hosted model is configured separately and is not part of this submission. Desk shot for context:
+[TradeCharts](https://tradecharts.app) is a live commercial charting desk, and this gate lives inside it. Every map on these charts was proposed by a model, checked by the same validator this repo publishes, and confirmed by a person. The desk's own hosted model is configured separately and is not part of this submission. Screenshots from a signed-in session on tradecharts.app (2026-10-13):
 
-<p align="center"><img src="docs/assets/desk-propose.png" alt="TradeCharts desk — Propose on ETH-USD 1W, gated by the same validator" width="860"></p>
+<table>
+<tr>
+<td width="50%"><img src="docs/assets/desk-eth.jpg" alt="tradecharts.app: ETH-USD weekly with its confirmed Elliott map"><br><sub>ETH-USD weekly, confirmed map</sub></td>
+<td width="50%"><img src="docs/assets/desk-btc.jpg" alt="tradecharts.app: BTC-USD weekly with its confirmed Elliott map"><br><sub>BTC-USD weekly, confirmed map</sub></td>
+</tr>
+</table>
+
+<p align="center"><img src="docs/assets/desk-sol-runs.jpg" alt="tradecharts.app: SOL-USD weekly with the Elliott run panel showing the macro map confirmed" width="860"><br><sub>SOL-USD weekly with the Elliott run panel: the macro map is locked only after a person confirms it</sub></p>
 
 ## Built during the hackathon
 
