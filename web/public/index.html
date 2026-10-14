@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>wavecount — live demo · Nemotron on Nebius Token Factory</title>
+<meta name="description" content="Pick a weekly tape. Code measures it, NVIDIA Nemotron 3 Nano on Nebius Token Factory proposes an Elliott Wave count, and 35 deterministic rules decide whether it gets drawn.">
+<style>
+  :root { --bg:#0b0f14; --panel:#0d1117; --line:#1f2a37; --text:#d8e2ee; --dim:#7d93ab; --green:#7ee2a8; --amber:#e3b341; --red:#ff7b72; --blue:#79b8ff; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { background:var(--bg); color:var(--text); font:16px/1.5 'Segoe UI',Inter,system-ui,sans-serif; }
+  .mono { font-family:'Cascadia Mono',Consolas,ui-monospace,monospace; }
+  header { max-width:1200px; margin:0 auto; padding:28px 24px 8px; }
+  header .brand { color:var(--green); font-size:22px; }
+  header h1 { font-size:30px; font-weight:600; margin-top:6px; }
+  header p { color:var(--dim); margin-top:8px; max-width:900px; }
+  main { max-width:1200px; margin:0 auto; padding:16px 24px 40px; display:grid; grid-template-columns: 1fr 380px; gap:20px; }
+  @media (max-width: 980px) { main { grid-template-columns: 1fr; } }
+  .panel { background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:18px; }
+  .tapes { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:14px; }
+  .tapes button { background:#10161d; color:var(--text); border:1px solid #2c3a49; border-radius:999px; padding:7px 16px; cursor:pointer; font:inherit; }
+  .tapes button.on { border-color:var(--green); color:var(--green); }
+  #chart { width:100%; height:auto; display:block; }
+  .legend { display:flex; gap:18px; color:var(--dim); font-size:13px; margin-top:8px; flex-wrap:wrap; }
+  .legend i { display:inline-block; width:10px; height:10px; border-radius:50%; margin-right:6px; vertical-align:-1px; }
+  .run { width:100%; margin-top:14px; padding:14px; font:600 17px inherit; font-family:inherit; border-radius:12px; border:1px solid #9a7b2a; background:#15130c; color:var(--amber); cursor:pointer; }
+  .run:disabled { opacity:.55; cursor:progress; }
+  h2 { font-size:13px; letter-spacing:3px; color:var(--dim); font-weight:600; margin-bottom:10px; }
+  #log { font-size:12.5px; line-height:1.55; white-space:pre-wrap; word-break:break-word; min-height:120px; max-height:300px; overflow:auto; }
+  #log .req { color:var(--blue); } #log .res { color:var(--green); } #log .meas { color:var(--dim); } #log .wait { color:#6e7f94; }
+  #verdict { margin-top:16px; }
+  .badge { display:inline-block; padding:4px 12px; border-radius:999px; font-weight:700; font-size:14px; letter-spacing:1px; }
+  .b-rejected { background:#2a1213; color:var(--red); border:1px solid var(--red); }
+  .b-flagged { background:#2a2410; color:var(--amber); border:1px solid var(--amber); }
+  .b-valid { background:#0f1f15; color:#56d364; border:1px solid #56d364; }
+  .b-abstain { background:#0e1622; color:var(--blue); border:1px solid var(--blue); }
+  .pattern { margin-top:10px; }
+  .vio { margin-top:10px; font-size:13px; color:#ffa198; }
+  .vio li { margin:4px 0 4px 18px; }
+  .note { color:var(--dim); font-size:13px; margin-top:10px; }
+  .ghost { margin-top:10px; font-size:13px; color:var(--dim); }
+  .err { color:var(--red); margin-top:10px; }
+  footer { max-width:1200px; margin:0 auto; padding:0 24px 40px; color:var(--dim); font-size:14px; }
+  footer a { color:var(--blue); text-decoration:none; }
+  .how { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-top:16px; }
+  @media (max-width: 760px) { .how { grid-template-columns:1fr 1fr; } }
+  .how div { border:1px solid var(--line); border-radius:10px; padding:10px 12px; font-size:13px; color:var(--dim); }
+  .how b { display:block; color:var(--text); font-size:14px; }
+  .how .model b { color:var(--amber); }
+</style>
+</head>
+<body>
+<header>
+  <div class="brand mono">wavecount</div>
+  <h1>The model proposes. The rules gate. A human confirms.</h1>
+  <p>Pick a weekly tape and press Run. Code measures it, <b>NVIDIA Nemotron 3 Nano on Nebius Token Factory</b> proposes an Elliott Wave count, and 35 deterministic rules decide whether it is drawn. Every model call below is live.</p>
+  <div class="how">
+    <div><b>1 · Measure</b>swings, Fibonacci, wave arithmetic — code, no model</div>
+    <div class="model"><b>2 · Propose</b>Nemotron 3 Nano on Token Factory, two samples, strict JSON</div>
+    <div><b>3 · Gate</b>35 Elliott rules; a broken count is rejected and nothing is drawn</div>
+    <div><b>4 · Confirm</b>a passing count carries its flags; a person decides</div>
+  </div>
+</header>
+
+<main>
+  <section class="panel">
+    <div class="tapes" id="tapes"></div>
+    <svg id="chart" viewBox="0 0 1000 520" role="img" aria-label="Weekly price chart"></svg>
+    <div class="legend">
+      <span><i style="background:#7ee2a8"></i>weekly close</span>
+      <span><i style="background:#8b9cb3"></i>measured swings (code)</span>
+      <span><i style="background:#e3b341"></i>count that passed the gate</span>
+      <span><i style="background:#ff7b72"></i>rejected proposal (only if you ask to see it)</span>
+    </div>
+    <button class="run" id="run">Run on Nemotron · Nebius Token Factory</button>
+  </section>
+
+  <aside class="panel">
+    <h2>LIVE TRACE</h2>
+    <div id="log" class="mono"><span class="meas">Pick a tape and press Run. A run takes about a minute: two Nemotron calls.</span></div>
+    <div id="verdict"></div>
+  </aside>
+</main>
+
+<footer>
+  Open-source engine (Apache-2.0): <a href="https://github.com/tradecharts/tradecharts-nemotron">github.com/tradecharts/tradecharts-nemotron</a> ·
+  Demo video: <a href="https://youtu.be/GKrzD-3MAbQ">youtu.be/GKrzD-3MAbQ</a> ·
+  Live desk: <a href="https://tradecharts.app">tradecharts.app</a><br>
+  Nebius × NVIDIA Global AI Hackathon · Best Apps and Agents. Runs are rate-limited. An interpretive map — not a signal, not advice.
+</footer>
+
+<script>
+const $ = (id) => document.getElementById(id);
+const NS = "http://www.w3.org/2000/svg";
+const W = 1000, H = 520, PAD = { l: 60, r: 20, t: 20, b: 36 };
+let TAPES = [], cur = null, last = null, showGhost = false;
+
+const el = (tag, attrs, parent, text) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (text != null) e.textContent = text; parent.appendChild(e); return e; };
+
+function scales(t) {
+  const xs = t.bars.map(b => b[0]), ys = t.bars.map(b => b[1]).concat(t.swings.map(s => s.price));
+  const x0 = xs[0], x1 = xs[xs.length - 1], lo = Math.min(...ys), hi = Math.max(...ys);
+  return {
+    x: (v) => PAD.l + (W - PAD.l - PAD.r) * (v - x0) / (x1 - x0),
+    y: (v) => H - PAD.b - (H - PAD.t - PAD.b) * (v - lo) / (hi - lo),
+    lo, hi, x0, x1,
+  };
+}
+const fmt = (v) => v >= 1000 ? Math.round(v).toLocaleString() : v >= 1 ? v.toFixed(2) : v.toPrecision(3);
+
+function draw() {
+  const svg = $("chart"); svg.innerHTML = "";
+  if (!cur) return;
+  const s = scales(cur);
+  for (let i = 0; i <= 4; i++) {
+    const v = s.lo + (s.hi - s.lo) * i / 4, y = s.y(v);
+    el("line", { x1: PAD.l, x2: W - PAD.r, y1: y, y2: y, stroke: "#18212c" }, svg);
+    el("text", { x: PAD.l - 8, y: y + 4, "text-anchor": "end", fill: "#526b84", "font-size": 12 }, svg, fmt(v));
+  }
+  let lastYear = "";
+  for (const [t] of cur.bars) { const yr = new Date(t).getUTCFullYear() + ""; if (yr !== lastYear) { lastYear = yr; el("text", { x: s.x(t), y: H - 12, "text-anchor": "middle", fill: "#526b84", "font-size": 12 }, svg, yr); } }
+  const path = cur.bars.map((b, i) => (i ? "L" : "M") + s.x(b[0]).toFixed(1) + " " + s.y(b[1]).toFixed(1)).join(" ");
+  el("path", { d: path, fill: "none", stroke: "#7ee2a8", "stroke-width": 1.6, opacity: .9 }, svg);
+  for (const sw of cur.swings) {
+    el("circle", { cx: s.x(sw.time), cy: s.y(sw.price), r: 3.2, fill: "#8b9cb3" }, svg);
+  }
+  el("text", { x: W - PAD.r, y: PAD.t + 4, "text-anchor": "end", fill: "#7d93ab", "font-size": 13 }, svg, `${cur.symbol} · weekly · ${cur.bars.length} bars · ${cur.swings.length} measured swings`);
+
+  if (last && last.tape === cur.id && last.proposal && last.proposal.origin && Array.isArray(last.proposal.pivots)) {
+    const rejected = last.severity === "rejected";
+    if (!rejected || showGhost) {
+      const pts = [last.proposal.origin, ...last.proposal.pivots].filter(p => p && Number.isFinite(p.time) && Number.isFinite(p.price));
+      const color = rejected ? "#ff7b72" : "#e3b341";
+      el("path", { d: pts.map((p, i) => (i ? "L" : "M") + s.x(p.time).toFixed(1) + " " + s.y(p.price).toFixed(1)).join(" "), fill: "none", stroke: color, "stroke-width": 2.6, "stroke-dasharray": rejected ? "8 6" : "", opacity: rejected ? .8 : 1 }, svg);
+      pts.forEach((p, i) => {
+        const up = p.anchor === "high";
+        el("circle", { cx: s.x(p.time), cy: s.y(p.price), r: 4.5, fill: color }, svg);
+        el("text", { x: s.x(p.time), y: s.y(p.price) + (up ? -10 : 20), "text-anchor": "middle", fill: color, "font-size": 14, "font-weight": 700 }, svg, (p.label || String(i)).replace(/[()]/g, ""));
+      });
+    }
+    if (rejected) {
+      el("rect", { x: W / 2 - 210, y: H / 2 - 34, width: 420, height: 56, rx: 10, fill: "#0b0f14", stroke: "#ff7b72", "stroke-width": 2, opacity: .92 }, svg);
+      el("text", { x: W / 2, y: H / 2 + 2, "text-anchor": "middle", fill: "#ff7b72", "font-size": 20, "font-weight": 700 }, svg, showGhost ? "REJECTED — shown for learning only" : "REJECTED — nothing drawn");
+    }
+  }
+}
+
+function pickTape(id) {
+  cur = TAPES.find(t => t.id === id);
+  document.querySelectorAll("#tapes button").forEach(b => b.classList.toggle("on", b.dataset.id === id));
+  draw();
+}
+
+function logLine(text, cls) {
+  const log = $("log"); const d = document.createElement("div"); if (cls) d.className = cls; d.textContent = text; log.appendChild(d); log.scrollTop = log.scrollHeight; return d;
+}
+const cls = (l) => l.startsWith("→") ? "req" : l.startsWith("←") ? "res" : "meas";
+
+function renderVerdict(v) {
+  const box = $("verdict"); box.innerHTML = "";
+  const badge = document.createElement("span"); badge.className = "badge b-" + v.severity; badge.textContent = v.severity.toUpperCase(); box.appendChild(badge);
+  if (v.proposal) {
+    const p = document.createElement("div"); p.className = "pattern";
+    p.textContent = `Nemotron proposed: ${v.proposal.pattern || "?"}${v.proposal.reason ? " — " + v.proposal.reason : ""}`;
+    box.appendChild(p);
+  }
+  if (v.violations && v.violations.length) {
+    const ul = document.createElement("ul"); ul.className = "vio mono";
+    v.violations.forEach(x => { const li = document.createElement("li"); li.textContent = x; ul.appendChild(li); });
+    box.appendChild(ul);
+  }
+  const n = document.createElement("div"); n.className = "note";
+  n.textContent = {
+    rejected: "A hard rule broke, so the gate stopped it. On a real desk nothing is drawn.",
+    flagged: "It passed the gate with advisories. It is drawn, and a person decides.",
+    valid: "It passed every rule. A person still confirms.",
+    abstain: "The model found no honest count, so nothing is drawn.",
+  }[v.severity] || "";
+  box.appendChild(n);
+  if (v.severity === "rejected" && v.proposal) {
+    const g = document.createElement("label"); g.className = "ghost";
+    g.innerHTML = `<input type="checkbox" ${showGhost ? "checked" : ""}> show the rejected proposal on the chart (for learning)`;
+    g.querySelector("input").onchange = (e) => { showGhost = e.target.checked; draw(); };
+    box.appendChild(g);
+  }
+  const m = document.createElement("div"); m.className = "note mono"; m.textContent = `${v.model} via ${v.provider} · ${v.seconds}s`; box.appendChild(m);
+}
+
+async function run() {
+  if (!cur) return;
+  const btn = $("run"); btn.disabled = true; btn.textContent = "Running on Token Factory…";
+  $("log").innerHTML = ""; $("verdict").innerHTML = ""; last = null; showGhost = false; draw();
+  logLine(`$ wavecount --csv examples/${cur.id}-usd-1w.csv --symbol ${cur.symbol} --tf 1W --trace`, "meas");
+  let wait = null, waitT = 0, waitTimer = null;
+  const startWait = () => { stopWait(); waitT = performance.now(); wait = logLine("", "wait"); waitTimer = setInterval(() => { wait.textContent = `… Nemotron reasoning on Token Factory · ${((performance.now() - waitT) / 1000).toFixed(0)} s`; }, 250); };
+  const stopWait = () => { if (waitTimer) clearInterval(waitTimer); if (wait) wait.remove(); wait = null; waitTimer = null; };
+  try {
+    const res = await fetch(`/api/run?tape=${cur.id}`, { method: "POST" });
+    if (!res.ok) { const e = await res.json().catch(() => ({})); throw new Error(e.error || `HTTP ${res.status}`); }
+    const reader = res.body.getReader(); const dec = new TextDecoder(); let buf = "";
+    for (;;) {
+      const { value, done } = await reader.read(); if (done) break;
+      buf += dec.decode(value, { stream: true });
+      let i;
+      while ((i = buf.indexOf("\n\n")) >= 0) {
+        const chunk = buf.slice(0, i); buf = buf.slice(i + 2);
+        const ev = (chunk.match(/^event: (.*)$/m) || [])[1]; const data = (chunk.match(/^data: (.*)$/m) || [])[1];
+        if (!ev || !data) continue;
+        const d = JSON.parse(data);
+        if (ev === "trace") { stopWait(); logLine(d.line, cls(d.line)); if (d.line.startsWith("→")) startWait(); }
+        if (ev === "verdict") { stopWait(); last = { ...d, tape: cur.id }; renderVerdict(d); draw(); }
+        if (ev === "error") { stopWait(); const e = document.createElement("div"); e.className = "err"; e.textContent = d.message; $("verdict").appendChild(e); }
+      }
+    }
+  } catch (e) {
+    stopWait(); const d = document.createElement("div"); d.className = "err"; d.textContent = e.message; $("verdict").appendChild(d);
+  } finally {
+    stopWait(); btn.disabled = false; btn.textContent = "Run on Nemotron · Nebius Token Factory";
+  }
+}
+
+(async () => {
+  const r = await fetch("/api/tapes"); TAPES = (await r.json()).tapes;
+  const box = $("tapes");
+  TAPES.forEach(t => { const b = document.createElement("button"); b.textContent = t.symbol.replace("-USD", ""); b.dataset.id = t.id; b.onclick = () => pickTape(t.id); box.appendChild(b); });
+  pickTape("bnb");
+  $("run").onclick = run;
+})();
+</script>
+</body>
+</html>

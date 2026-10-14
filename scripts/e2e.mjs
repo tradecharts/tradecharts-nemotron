@@ -5,6 +5,7 @@
 //   tsc -b && NVIDIA_API_KEY=... node scripts/e2e.mjs
 //   WAVECOUNT_PROVIDER=nebius NEBIUS_API_KEY=... node scripts/e2e.mjs
 
+import "../dist/node-transport.js";
 import { readFileSync, readdirSync } from "node:fs";
 import { resolve, dirname } from "node:path";
 import { fileURLToPath } from "node:url";

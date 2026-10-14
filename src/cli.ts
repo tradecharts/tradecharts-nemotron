@@ -6,6 +6,7 @@
 //
 // --trace prints each model call (endpoint, latency, tokens, completion id). --samples N (default 2).
 
+import "./node-transport.js";
 import { readFileSync } from "node:fs";
 import { nvidiaProvider } from "./provider/nvidia.js";
 import { nebiusProvider } from "./provider/nebius.js";

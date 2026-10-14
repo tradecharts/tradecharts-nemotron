@@ -1,12 +1,8 @@
 // Provider interface — one contract, two implementations.
 //   nvidia  : integrate.api.nvidia.com  (dev, tests, desk BYOK product feature)
 //   nebius  : Nebius Token Factory OpenAI-compatible endpoint (REQUIRED for the hackathon submission)
-// The engine never knows which one is behind it.
-
-import { Agent, setGlobalDispatcher } from "undici";
-
-// Reasoning calls can run past undici's 5-minute default header timeout.
-setGlobalDispatcher(new Agent({ headersTimeout: 900_000, bodyTimeout: 900_000 }));
+// The engine never knows which one is behind it. Runtime-neutral (Node CLI and Workers);
+// Node-only transport tuning lives in node-transport.ts.
 
 export interface ChatMessage {
   role: "system" | "user" | "assistant";

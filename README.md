@@ -9,7 +9,15 @@
 
 Built for the **Nebius x NVIDIA Global AI Hackathon** (track: Best Apps and Agents).
 
+**Live demo:** [demo.tradecharts.app](https://demo.tradecharts.app). Pick a weekly tape and press Run: the engine calls Nemotron on Nebius Token Factory live, streams every traced call, and the gate decides. A rejected count draws nothing; a passing count is drawn with its flags.
+
 **Demo video (2:37):** [youtu.be/GKrzD-3MAbQ](https://youtu.be/GKrzD-3MAbQ). An animated intro explains the problem and why we chose Nemotron; every model call after it is a live request to Token Factory, followed by a look at the live desk; the raw transcripts with completion ids are in [`evidence/2026-10-13/`](evidence/2026-10-13/).
+
+## Try it
+
+<p align="center"><a href="https://demo.tradecharts.app"><img src="docs/assets/live-demo.jpg" alt="demo.tradecharts.app: BTC-USD weekly; Nemotron on Token Factory proposed a zigzag, it passed the gate with F7, S5 and S12 flags, and the count is drawn" width="860"></a></p>
+
+[demo.tradecharts.app](https://demo.tradecharts.app) runs this repo's engine unchanged in a Cloudflare Worker ([`web/`](web/)). The Token Factory key stays server-side; runs are rate-limited per visitor and capped per day. A run takes about a minute (two Nemotron calls).
 
 ## The problem, in four pictures
 
@@ -129,12 +137,13 @@ The allow-lists absorb model nondeterminism (Nemotron may read a tape as an impu
 ## Layout
 
 ```
-src/provider/    index.ts (interface + OpenAI-compatible client) · nebius.ts (Token Factory) · nvidia.ts (dev)
+src/provider/    index.ts (interface + OpenAI-compatible client, runtime-neutral) · nebius.ts (Token Factory) · nvidia.ts (dev)
 src/engine/      measure.ts (deterministic facts) · prompt.ts (classification contract) · pipeline.ts (samples, gate, rank)
 src/validator/   the production gate (35 rules, 72 tests) · types.ts · judge.ts (optional advisory merge, unused by the CLI)
 scripts/         e2e.mjs (tape matrix) · demo.sh (three-act terminal demo)
 examples/        real weekly tapes (ETH, BTC, BNB, SOL, DOGE)
 evidence/        recorded live runs
+web/             the live demo: Cloudflare Worker + page, same engine (npm run dev / deploy in web/)
 ```
 
 ## The live desk: tradecharts.app

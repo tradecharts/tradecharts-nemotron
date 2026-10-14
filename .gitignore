@@ -6,3 +6,6 @@ video/
 VIDEO.md
 *.mp4
 __pycache__/
+web/.dev.vars
+web/node_modules/
+web/.wrangler/

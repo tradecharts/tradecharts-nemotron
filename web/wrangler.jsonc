@@ -1,0 +1,25 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "wavecount-demo",
+  "main": "src/worker.ts",
+  "compatibility_date": "2026-10-13",
+  "upload_source_maps": true,
+  "assets": {
+    "directory": "./public/",
+    "binding": "ASSETS",
+    "run_worker_first": ["/api/*"]
+  },
+  "rules": [{ "type": "Text", "globs": ["**/*.csv"], "fallthrough": true }],
+  "ratelimits": [
+    // per visitor IP: 2 live runs a minute
+    { "name": "RUN_LIMIT", "namespace_id": "7301", "simple": { "limit": 2, "period": 60 } },
+    // per Cloudflare location, all visitors: 6 live runs a minute
+    { "name": "GLOBAL_LIMIT", "namespace_id": "7302", "simple": { "limit": 6, "period": 60 } }
+  ],
+  // global daily cap on live runs (Token Factory spend ceiling)
+  "durable_objects": { "bindings": [{ "name": "BUDGET", "class_name": "RunBudget" }] },
+  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["RunBudget"] }],
+  "vars": { "MAX_RUNS_PER_DAY": "150" },
+  "routes": [{ "pattern": "demo.tradecharts.app", "custom_domain": true }],
+  "observability": { "enabled": true, "traces": { "enabled": true } }
+}
