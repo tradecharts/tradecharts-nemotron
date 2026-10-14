@@ -1,0 +1,16 @@
+# recorded 2026-10-13T17:54:16 · exit 2
+$ WAVECOUNT_PROVIDER=nebius node dist/cli.js --csv examples/sol-usd-1w.csv --symbol SOL-USD --tf 1W --trace
+[   4.46s] measured 300 bars → 34 swings (deterministic, no model)
+[   4.46s] → sample 1/2 · POST https://api.tokenfactory.nebius.com/v1/chat/completions · nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B
+[  60.65s] ← 200 · 56.2 s · 1618 in / 11023 out tokens · id chatcmpl-725d7c7e-a250-41e5-9630-746c896da0d9 · gate: rejected
+[  60.65s] → sample 2/2 · POST https://api.tokenfactory.nebius.com/v1/chat/completions · nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B
+[  81.90s] ← 200 · 21.3 s · 1618 in / 4063 out tokens · id chatcmpl-8735396d-46e2-4926-b2a0-148353ebd850 · gate: rejected
+[  81.91s] SOL-USD 1W · 300 bars · 34 swings · nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B via nebius
+[  81.91s] severity: rejected (rule_violation)
+[  81.91s] pattern: impulse · weekly · weekly impulse from low 126.0
+[  81.92s] violations:
+[  81.92s]   - H2: Wave 4 overlaps wave 1 in a cash impulse.
+[  81.92s]   - S7: Waves 2 and 4 do not alternate (both deep or both shallow).
+[  81.92s]   - A1: Wave 4 overlapped wave 1. Name diagonal, triangle, or ABC — do not leave this as impulse.
+[  81.92s]   - S5: Map is a local sketch. Label both working-range extremes (2025-01-13 295.83 and 2021-01-18 2.5295) or span most of that range.
+[  81.92s]   - S12: Elliott is fractal. Emit macro pivots for the larger motive/corrective, or say in reason that this lock is the macro.

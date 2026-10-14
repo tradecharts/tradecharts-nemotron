@@ -14,7 +14,7 @@ import { nvidiaProvider } from "../dist/provider/nvidia.js";
 import { nebiusProvider } from "../dist/provider/nebius.js";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
-const which = process.env.WAVECOUNT_PROVIDER ?? "nvidia";
+const which = process.env.WAVECOUNT_PROVIDER ?? "nebius";
 const apiKey = which === "nebius" ? process.env.NEBIUS_API_KEY : process.env.NVIDIA_API_KEY;
 if (!apiKey) { console.error(`Missing ${which === "nebius" ? "NEBIUS_API_KEY" : "NVIDIA_API_KEY"}`); process.exit(1); }
 const provider = which === "nebius" ? nebiusProvider(apiKey) : nvidiaProvider(apiKey);
@@ -32,7 +32,7 @@ for (const file of csvs) {
   const packet = measure(bars, undefined, symbol, "1W");
   const t0 = Date.now();
   let v;
-  try { v = await runPipeline(provider, packet); }
+  try { v = await runPipeline(provider, packet, { samples: 2 }); }
   catch (e) { console.log(`! ${symbol.padEnd(5)} → error: ${String(e.message).slice(0, 90)}`); continue; }
   const cls = v.proposal?.status === "unresolved" ? "abstain" : v.severity;
   const exp = expected[file];

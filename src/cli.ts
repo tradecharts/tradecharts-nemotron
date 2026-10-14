@@ -1,8 +1,10 @@
 // wavecount — the standalone engine entry. CSV in → measured facts →
 // Nemotron classifies → the deterministic validator gates → verdict out.
 //
-//   NVIDIA_API_KEY=nvapi-... npm run wavecount -- --csv examples/eth-usd-1w.csv --symbol ETH-USD --tf 1W
-//   WAVECOUNT_PROVIDER=nebius NEBIUS_API_KEY=... npm run wavecount -- --csv examples/eth-usd-1w.csv
+//   NEBIUS_API_KEY=... npm run wavecount -- --csv examples/eth-usd-1w.csv --symbol ETH-USD --tf 1W --trace
+//   WAVECOUNT_PROVIDER=nvidia NVIDIA_API_KEY=nvapi-... npm run wavecount -- --csv examples/eth-usd-1w.csv
+//
+// --trace prints each model call (endpoint, latency, tokens, completion id). --samples N (default 2).
 
 import { readFileSync } from "node:fs";
 import { nvidiaProvider } from "./provider/nvidia.js";
@@ -15,7 +17,7 @@ const csv = args.csv ?? "examples/eth-usd-1w.csv";
 const symbol = args.symbol ?? "ETH-USD";
 const timeframe = args.tf ?? "1W";
 
-const which = args.provider ?? process.env.WAVECOUNT_PROVIDER ?? "nvidia";
+const which = args.provider ?? process.env.WAVECOUNT_PROVIDER ?? "nebius";
 const apiKey = which === "nebius" ? process.env.NEBIUS_API_KEY : process.env.NVIDIA_API_KEY;
 if (!apiKey) {
   console.error(`Missing ${which === "nebius" ? "NEBIUS_API_KEY" : "NVIDIA_API_KEY"} (env). Never hardcode keys.`);
@@ -27,9 +29,12 @@ const bars = parseCsv(readFileSync(csv, "utf8"));
 if (bars.length < 20) { console.error(`${csv}: need ≥ 20 bars, got ${bars.length}`); process.exit(1); }
 
 const packet = measure(bars, undefined, symbol, timeframe);
+const samples = args.samples ? Math.max(1, Number(args.samples) || 2) : 2;
+const trace = args.trace ? (line: string) => console.log(line) : undefined;
+trace?.(`measured ${bars.length} bars → ${packet.swings.length} swings (deterministic, no model)`);
 let verdict;
 try {
-  verdict = await runPipeline(provider, packet, { samples: 2 });
+  verdict = await runPipeline(provider, packet, { samples, trace });
 } catch (e) {
   console.error(`provider unavailable (${String((e as Error).message).slice(0, 90)})`);
   console.error("no verdict — nothing drawn. Retry when the endpoint frees up.");

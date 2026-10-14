@@ -1,0 +1,17 @@
+# recorded 2026-10-13T17:48:00 · exit 0
+$ npm test
+[   2.12s] 
+[   2.12s] > tradecharts-nemotron@0.1.0 test
+[   2.12s] > vitest run
+[   2.13s] 
+[   2.58s] 
+[   2.58s]  RUN  v3.2.7 C:/Users/dean/Projects/tradecharts-nemotron
+[   2.58s] 
+[   3.09s]  ✓ src/validator/judge.test.ts (4 tests) 4ms
+[   3.13s]  ✓ src/validator/validator.test.ts (68 tests) 22ms
+[   3.15s] 
+[   3.15s]  Test Files  2 passed (2)
+[   3.16s]       Tests  72 passed (72)
+[   3.16s]    Start at  17:47:54
+[   3.16s]    Duration  573ms (transform 179ms, setup 0ms, collect 230ms, tests 26ms, environment 0ms, prepare 282ms)
+[   3.17s] 

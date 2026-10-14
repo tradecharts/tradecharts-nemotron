@@ -1,0 +1,16 @@
+# recorded 2026-10-13T17:49:47 · exit 2
+$ WAVECOUNT_PROVIDER=nebius node dist/cli.js --csv examples/bnb-usd-1w.csv --symbol BNB-USD --tf 1W --trace
+[   4.45s] measured 300 bars → 14 swings (deterministic, no model)
+[   4.45s] → sample 1/2 · POST https://api.tokenfactory.nebius.com/v1/chat/completions · nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B
+[  46.87s] ← 200 · 42.4 s · 1566 in / 5973 out tokens · id chatcmpl-f7479f2c-0f8a-45ae-96b4-42ab8cb7311f · gate: rejected
+[  46.87s] → sample 2/2 · POST https://api.tokenfactory.nebius.com/v1/chat/completions · nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B
+[  77.53s] ← 200 · 30.7 s · 1566 in / 5319 out tokens · id chatcmpl-ea9c2777-4f3b-41e6-8b1e-8b819125e734 · gate: rejected
+[  77.53s] BNB-USD 1W · 300 bars · 14 swings · nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B via nebius
+[  77.53s] severity: rejected (rule_violation)
+[  77.53s] pattern: impulse · weekly · impulse from 2025-02-03 low
+[  77.53s] violations:
+[  77.53s]   - H2: Wave 4 overlaps wave 1 in a cash impulse.
+[  77.55s]   - S7: Waves 2 and 4 do not alternate (both deep or both shallow).
+[  77.55s]   - A1: Wave 4 overlapped wave 1. Name diagonal, triangle, or ABC — do not leave this as impulse.
+[  77.55s]   - F7: Wave + Fib are one proof. Off-catalog or unmeasured: 2/1 97.0%; 3/1 374.2% off-catalog; 4/3 96.5% off-catalog; 5 117.5%.
+[  77.55s]   - S12: Elliott is fractal. Emit macro pivots for the larger motive/corrective, or say in reason that this lock is the macro.

@@ -1,0 +1,14 @@
+# recorded 2026-10-13T17:52:48 · exit 0
+$ WAVECOUNT_PROVIDER=nebius node dist/cli.js --csv examples/eth-usd-1w.csv --symbol ETH-USD --tf 1W --trace
+[   4.46s] measured 300 bars → 29 swings (deterministic, no model)
+[   4.47s] → sample 1/2 · POST https://api.tokenfactory.nebius.com/v1/chat/completions · nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B
+[  45.09s] ← 200 · 40.6 s · 1672 in / 9938 out tokens · id chatcmpl-3d93a695-051a-4f5f-b8a1-ff9f787d0446 · gate: flagged
+[  45.09s] → sample 2/2 · POST https://api.tokenfactory.nebius.com/v1/chat/completions · nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B
+[  70.91s] ← 200 · 25.8 s · 1672 in / 5826 out tokens · id chatcmpl-1c815c47-febb-4615-9491-45de046a9ac5 · gate: flagged
+[  70.92s] ETH-USD 1W · 300 bars · 29 swings · nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B via nebius
+[  70.92s] severity: flagged (rule_violation)
+[  70.92s] pattern: zigzag · weekly · weekly zigzag from recent low
+[  70.92s] violations:
+[  70.92s]   - F7: Wave + Fib are one proof. Off-catalog or unmeasured: B/A 235.7% off-catalog; C/A 158.0%.
+[  70.92s]   - S5: Map is a local sketch. Label both working-range extremes (2025-08-18 4956.78 and 2022-06-13 881.56) or span most of that range.
+[  70.93s]   - S12: Elliott is fractal. Emit macro pivots for the larger motive/corrective, or say in reason that this lock is the macro.

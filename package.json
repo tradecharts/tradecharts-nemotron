@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "Open engine surface: Nemotron proposes the wave count, a deterministic validator gates it. CLI + optional HTTP mode. Not the desk.",
+  "description": "Open engine surface: Nemotron on Nebius Token Factory proposes the wave count, a deterministic validator gates it. CLI. Not the desk.",
   "scripts": {
     "build": "tsc -b",
     "test": "vitest run",

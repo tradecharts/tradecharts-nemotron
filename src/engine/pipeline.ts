@@ -1,7 +1,7 @@
 // Propose → validate → verdict. The validator is the production gate
 // (copied, tested — 72 tests green). Nothing invalid passes.
 
-import type { ModelProvider } from "../provider/index.js";
+import type { CompletionResponse, ModelProvider } from "../provider/index.js";
 import type { MeasurePacket } from "./measure.js";
 import { renderFacts } from "./measure.js";
 import { CLASSIFY_SYSTEM, buildClassifyPrompt } from "./prompt.js";
@@ -18,17 +18,20 @@ export type Verdict = {
   model: string;
 };
 
+export type Trace = (line: string) => void;
+
 export async function runPipeline(
   provider: ModelProvider,
   packet: MeasurePacket,
-  opts: { samples?: number } = {},
+  opts: { samples?: number; trace?: Trace } = {},
 ): Promise<Verdict> {
   // Desk doctrine: the model runs more than once, the desk judges. Low
   // temperature + two samples keeps a passing count passing on camera.
   const samples = Math.max(1, opts.samples ?? 1);
   const attempts: Verdict[] = [];
   for (let i = 0; i < samples; i++) {
-    attempts.push(await classifyOnce(provider, packet, i > 0 ? 0.2 : 0.2));
+    opts.trace?.(`→ sample ${i + 1}/${samples} · POST ${provider.baseUrl}/chat/completions · ${provider.defaultModel}`);
+    attempts.push(await classifyOnce(provider, packet, 0.2, opts.trace));
   }
   return attempts.reduce((best, v) => (rank(v) < rank(best) ? v : best));
 }
@@ -41,7 +44,7 @@ function rank(v: Verdict): number {
   return 20 + v.violations.length;
 }
 
-async function classifyOnce(provider: ModelProvider, packet: MeasurePacket, temperature: number): Promise<Verdict> {
+async function classifyOnce(provider: ModelProvider, packet: MeasurePacket, temperature: number, trace?: Trace): Promise<Verdict> {
   const completion = await provider.complete({
     messages: [
       { role: "system", content: CLASSIFY_SYSTEM },
@@ -51,7 +54,17 @@ async function classifyOnce(provider: ModelProvider, packet: MeasurePacket, temp
     reasoningBudget: 2048,
     temperature,
   });
+  const verdict = gate(provider, packet, completion);
+  if (trace) {
+    const u = completion.usage;
+    const tokens = u?.promptTokens !== undefined ? ` · ${u.promptTokens} in / ${u.completionTokens ?? "?"} out tokens` : "";
+    const cls = verdict.proposal?.status === "unresolved" ? "abstain" : verdict.severity;
+    trace(`← 200 · ${(completion.ms / 1000).toFixed(1)} s${tokens} · id ${completion.id ?? "n/a"} · gate: ${cls}`);
+  }
+  return verdict;
+}
 
+function gate(provider: ModelProvider, packet: MeasurePacket, completion: CompletionResponse): Verdict {
   let parsed: Record<string, unknown> | null = null;
   try {
     parsed = extractJson(completion.content) as Record<string, unknown> | null;

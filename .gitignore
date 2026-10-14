@@ -3,5 +3,6 @@ dist/
 .env
 wave-debug.json
 video/
-nebius-demo.mp4
-final-*.png
+VIDEO.md
+*.mp4
+__pycache__/

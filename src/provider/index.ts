@@ -1,6 +1,6 @@
 // Provider interface — one contract, two implementations.
 //   nvidia  : integrate.api.nvidia.com  (dev, tests, desk BYOK product feature)
-//   nebius  : Nebius AI Cloud / Token Factory OpenAI-compatible endpoint (REQUIRED for the hackathon submission)
+//   nebius  : Nebius Token Factory OpenAI-compatible endpoint (REQUIRED for the hackathon submission)
 // The engine never knows which one is behind it.
 
 import { Agent, setGlobalDispatcher } from "undici";
@@ -27,11 +27,16 @@ export interface CompletionResponse {
   content: string;
   model: string;
   provider: string;
+  /** Provider-issued completion id — the receipt that a real call happened. */
+  id?: string;
+  usage?: { promptTokens?: number; completionTokens?: number };
+  ms: number;
   raw?: unknown;
 }
 
 export interface ModelProvider {
   readonly name: string;
+  readonly baseUrl: string;
   readonly defaultModel: string;
   complete(req: CompletionRequest): Promise<CompletionResponse>;
 }
@@ -60,8 +65,10 @@ export function openAICompatibleProvider(opts: {
   const { name, baseUrl, apiKey, defaultModel } = opts;
   return {
     name,
+    baseUrl,
     defaultModel,
     async complete(req): Promise<CompletionResponse> {
+      const t0 = Date.now();
       const model = req.model ?? defaultModel;
       const body: Record<string, unknown> = {
         model,
@@ -91,10 +98,16 @@ export function openAICompatibleProvider(opts: {
         throw new Error(`${name} HTTP ${res.status}: ${text.slice(0, 300)}`);
       }
       const json = (await res.json()) as {
+        id?: string;
         choices?: { message?: { content?: string } }[];
+        usage?: { prompt_tokens?: number; completion_tokens?: number };
       };
       const content = json.choices?.[0]?.message?.content ?? "";
-      return { content, model, provider: name, raw: json };
+      return {
+        content, model, provider: name, id: json.id, ms: Date.now() - t0,
+        usage: { promptTokens: json.usage?.prompt_tokens, completionTokens: json.usage?.completion_tokens },
+        raw: json,
+      };
     },
   };
 }

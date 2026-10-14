@@ -1,0 +1,14 @@
+# recorded 2026-10-13T17:51:30 · exit 0
+$ WAVECOUNT_PROVIDER=nebius node dist/cli.js --csv examples/btc-usd-1w.csv --symbol BTC-USD --tf 1W --trace
+[   4.46s] measured 300 bars → 14 swings (deterministic, no model)
+[   4.47s] → sample 1/2 · POST https://api.tokenfactory.nebius.com/v1/chat/completions · nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B
+[  53.78s] ← 200 · 49.3 s · 1622 in / 9235 out tokens · id chatcmpl-830d1800-ecee-4f4f-a68d-24289f7c69f6 · gate: flagged
+[  53.78s] → sample 2/2 · POST https://api.tokenfactory.nebius.com/v1/chat/completions · nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B
+[  96.83s] ← 200 · 43.1 s · 1622 in / 6678 out tokens · id chatcmpl-b5364fa0-3da7-4c9f-84a3-32b26a8a792c · gate: flagged
+[  96.83s] BTC-USD 1W · 300 bars · 14 swings · nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B via nebius
+[  96.83s] severity: flagged (rule_violation)
+[  96.83s] pattern: zigzag · weekly · weekly zigzag from ATH
+[  96.83s] violations:
+[  96.83s]   - F7: Wave + Fib are one proof. Off-catalog or unmeasured: B/A 109.6% off-catalog; C/A 129.5%.
+[  96.84s]   - S5: Map is a local sketch. Label both working-range extremes (2025-10-06 126199.63 and 2022-11-21 15476) or span most of that range.
+[  96.84s]   - S12: Macro layer needs a full motive (1–5) or corrective (A-B-C) of the larger degree.
