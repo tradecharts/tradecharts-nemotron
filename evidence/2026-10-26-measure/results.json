@@ -1,0 +1,614 @@
+{
+  "AAPL": {
+    "symbol": "AAPL",
+    "bars": 169,
+    "swings": 2,
+    "class": "abstain",
+    "pattern": "unresolved",
+    "reason": "no valid three count",
+    "violations": [
+      "P1: no valid three count"
+    ],
+    "ms": 264632,
+    "promptTokens": 1934,
+    "completionTokens": 14298,
+    "calls": 2,
+    "error": null
+  },
+  "ADA-USD": {
+    "symbol": "ADA-USD",
+    "bars": 370,
+    "swings": 60,
+    "class": "flagged",
+    "pattern": "zigzag",
+    "reason": "weekly zigzag from recent high",
+    "violations": [
+      "S5: Map is a local sketch. Label both working-range extremes (2021-08-30 3.09941 and 2020-03-09 0.0184) or span most of that range.",
+      "S12: Elliott is fractal. Emit macro pivots for the larger motive/corrective, or say in reason that this lock is the macro."
+    ],
+    "ms": 511906,
+    "promptTokens": 3322,
+    "completionTokens": 11583,
+    "calls": 2,
+    "error": null
+  },
+  "APT-USD": {
+    "symbol": "APT-USD",
+    "bars": 206,
+    "swings": 78,
+    "class": "rejected",
+    "pattern": "impulse",
+    "reason": "weekly impulse",
+    "violations": [
+      "H2: Wave 4 overlaps wave 1 in a cash impulse.",
+      "A1: Wave 4 overlapped wave 1. Name diagonal, triangle, or ABC — do not leave this as impulse.",
+      "S5: Map is a local sketch. Label both working-range extremes (2022-11-21 21.3 and 2026-08-24 0.51) or span most of that range."
+    ],
+    "ms": 204709,
+    "promptTokens": 3212,
+    "completionTokens": 12538,
+    "calls": 2,
+    "error": null
+  },
+  "ARB-USD": {
+    "symbol": "ARB-USD",
+    "bars": 183,
+    "swings": 48,
+    "class": "flagged",
+    "pattern": "zigzag",
+    "reason": "weekly zigzag from low",
+    "violations": [
+      "F7: Wave + Fib are one proof. Off-catalog or unmeasured: B/A 211.6% off-catalog; C/A 70.4%.",
+      "S12: Elliott is fractal. Emit macro pivots for the larger motive/corrective, or say in reason that this lock is the macro."
+    ],
+    "ms": 151937,
+    "promptTokens": 3284,
+    "completionTokens": 10486,
+    "calls": 2,
+    "error": null
+  },
+  "ATOM-USD": {
+    "symbol": "ATOM-USD",
+    "bars": 365,
+    "swings": 118,
+    "class": "flagged",
+    "pattern": "impulse",
+    "reason": "weekly impulse",
+    "violations": [
+      "S5: Map is a local sketch. Label both working-range extremes (2021-09-20 44.762 and 2020-03-09 1.075) or span most of that range.",
+      "S12: Elliott is fractal. Emit macro pivots for the larger motive/corrective, or say in reason that this lock is the macro."
+    ],
+    "ms": 193022,
+    "promptTokens": 3250,
+    "completionTokens": 15132,
+    "calls": 2,
+    "error": null
+  },
+  "AVAX-USD": {
+    "symbol": "AVAX-USD",
+    "bars": 258,
+    "swings": 66,
+    "class": "flagged",
+    "pattern": "zigzag",
+    "reason": "weekly zigzag from recent high",
+    "violations": [
+      "F7: Wave + Fib are one proof. Off-catalog or unmeasured: B/A 206.5% off-catalog; C/A 57.2%.",
+      "S12: Elliott is fractal. Emit macro pivots for the larger motive/corrective, or say in reason that this lock is the macro."
+    ],
+    "ms": 141440,
+    "promptTokens": 3250,
+    "completionTokens": 11707,
+    "calls": 2,
+    "error": null
+  },
+  "BCH-USD": {
+    "symbol": "BCH-USD",
+    "bars": 370,
+    "swings": 29,
+    "class": "flagged",
+    "pattern": "zigzag",
+    "reason": "weekly zigzag from low",
+    "violations": [
+      "F7: Wave + Fib are one proof. Off-catalog or unmeasured: B/A 74.9%; C/A 28.4% off-catalog.",
+      "S12: Elliott is fractal. Emit macro pivots for the larger motive/corrective, or say in reason that this lock is the macro."
+    ],
+    "ms": 200773,
+    "promptTokens": 3310,
+    "completionTokens": 15119,
+    "calls": 2,
+    "error": null
+  },
+  "BNB-USD": {
+    "symbol": "BNB-USD",
+    "bars": 370,
+    "swings": 18,
+    "class": "rejected",
+    "pattern": null,
+    "reason": null,
+    "violations": [
+      "model returned no parsable JSON"
+    ],
+    "ms": 333720,
+    "promptTokens": 3292,
+    "completionTokens": 20758,
+    "calls": 2,
+    "error": null
+  },
+  "BTC-USD": {
+    "symbol": "BTC-USD",
+    "bars": 370,
+    "swings": 16,
+    "class": "flagged",
+    "pattern": "zigzag",
+    "reason": "weekly zigzag macro from low 60075",
+    "violations": [
+      "F7: Wave + Fib are one proof. Off-catalog or unmeasured: B/A 110.0% off-catalog; C/A 130.1%.",
+      "S5: Map is a local sketch. Label both working-range extremes (2023-06-19 138070 and 2020-03-09 3649.04) or span most of that range.",
+      "S12: Elliott is fractal. Emit macro pivots for the larger motive/corrective, or say in reason that this lock is the macro."
+    ],
+    "ms": 513843,
+    "promptTokens": 3338,
+    "completionTokens": 11275,
+    "calls": 2,
+    "error": null
+  },
+  "DOGE-USD": {
+    "symbol": "DOGE-USD",
+    "bars": 366,
+    "swings": 53,
+    "class": "flagged",
+    "pattern": "zigzag",
+    "reason": "weekly zigzag from ATH",
+    "violations": [
+      "F7: Wave + Fib are one proof. Off-catalog or unmeasured: B/A 201.2% off-catalog; C/A 475.1% off-catalog.",
+      "S5: Map is a local sketch. Label both working-range extremes (2021-05-03 0.7395508 and 2020-06-15 0.001) or span most of that range.",
+      "S12: Elliott is fractal. Emit macro pivots for the larger motive/corrective, or say in reason that this lock is the macro."
+    ],
+    "ms": 336763,
+    "promptTokens": 3310,
+    "completionTokens": 18343,
+    "calls": 2,
+    "error": null
+  },
+  "DOT-USD": {
+    "symbol": "DOT-USD",
+    "bars": 256,
+    "swings": 88,
+    "class": "flagged",
+    "pattern": "zigzag",
+    "reason": "weekly zigzag from recent low",
+    "violations": [
+      "S12: Elliott is fractal. Emit macro pivots for the larger motive/corrective, or say in reason that this lock is the macro."
+    ],
+    "ms": 325268,
+    "promptTokens": 3274,
+    "completionTokens": 19922,
+    "calls": 2,
+    "error": null
+  },
+  "ETH-USD": {
+    "symbol": "ETH-USD",
+    "bars": 370,
+    "swings": 25,
+    "class": "flagged",
+    "pattern": "zigzag",
+    "reason": "weekly zigzag from ATH",
+    "violations": [
+      "F7: Wave + Fib are one proof. Off-catalog or unmeasured: B/A 96.7%; C/A 36.4% off-catalog.",
+      "S12: Elliott is fractal. Emit macro pivots for the larger motive/corrective, or say in reason that this lock is the macro."
+    ],
+    "ms": 119263,
+    "promptTokens": 3300,
+    "completionTokens": 7586,
+    "calls": 2,
+    "error": null
+  },
+  "FIL-USD": {
+    "symbol": "FIL-USD",
+    "bars": 280,
+    "swings": 93,
+    "class": "flagged",
+    "pattern": "zigzag",
+    "reason": "weekly zigzag",
+    "violations": [
+      "F7: Wave + Fib are one proof. Off-catalog or unmeasured: B/A 105.9% off-catalog; C/A 140.9% off-catalog.",
+      "S5: Map is a local sketch. Label both working-range extremes (2021-08-30 120.09 and 2021-10-18 0.01) or span most of that range.",
+      "S12: Elliott is fractal. Emit macro pivots for the larger motive/corrective, or say in reason that this lock is the macro."
+    ],
+    "ms": 244286,
+    "promptTokens": 3236,
+    "completionTokens": 15540,
+    "calls": 2,
+    "error": null
+  },
+  "HBAR-USD": {
+    "symbol": "HBAR-USD",
+    "bars": 174,
+    "swings": 25,
+    "class": "flagged",
+    "pattern": "impulse",
+    "reason": "impulse from 0.2762 high",
+    "violations": [
+      "C1: Wave 4 threw through the 0–2 channel line.",
+      "S5: Map is a local sketch. Label both working-range extremes (2025-01-13 0.401 and 2023-06-26 0.0383) or span most of that range.",
+      "S12: Elliott is fractal. Emit macro pivots for the larger motive/corrective, or say in reason that this lock is the macro."
+    ],
+    "ms": 138937,
+    "promptTokens": 3292,
+    "completionTokens": 16117,
+    "calls": 2,
+    "error": null
+  },
+  "HYPE-USD": {
+    "symbol": "HYPE-USD",
+    "bars": 73,
+    "swings": 3,
+    "class": "flagged",
+    "pattern": "zigzag",
+    "reason": "weekly zigzag from ATH",
+    "violations": [
+      "F7: Wave + Fib are one proof. Off-catalog or unmeasured: B/A 187.0% off-catalog; C/A 51.8%.",
+      "S12: Elliott is fractal. Emit macro pivots for the larger motive/corrective, or say in reason that this lock is the macro."
+    ],
+    "ms": 203979,
+    "promptTokens": 2000,
+    "completionTokens": 24404,
+    "calls": 2,
+    "error": null
+  },
+  "INJ-USD": {
+    "symbol": "INJ-USD",
+    "bars": 24,
+    "swings": 1,
+    "class": "abstain",
+    "pattern": "unresolved",
+    "reason": "no valid three-wave count",
+    "violations": [
+      "P1: no valid three-wave count"
+    ],
+    "ms": 211797,
+    "promptTokens": 1838,
+    "completionTokens": 23099,
+    "calls": 2,
+    "error": null
+  },
+  "LDO-USD": {
+    "symbol": "LDO-USD",
+    "bars": 220,
+    "swings": 74,
+    "class": "flagged",
+    "pattern": "zigzag",
+    "reason": "weekly zigzag from low",
+    "violations": [
+      "F7: Wave + Fib are one proof. Off-catalog or unmeasured: B/A 279.2% off-catalog; C/A 109.2%.",
+      "S12: Elliott is fractal. Emit macro pivots for the larger motive/corrective, or say in reason that this lock is the macro."
+    ],
+    "ms": 97217,
+    "promptTokens": 3252,
+    "completionTokens": 11082,
+    "calls": 2,
+    "error": null
+  },
+  "LINK-USD": {
+    "symbol": "LINK-USD",
+    "bars": 250,
+    "swings": 22,
+    "class": "flagged",
+    "pattern": "flat",
+    "reason": "weekly flat from ATH",
+    "violations": [
+      "F7: Wave + Fib are one proof. Off-catalog or unmeasured: B/A 162.3% off-catalog; C/A 68.2%.",
+      "S5: Map is a local sketch. Label both working-range extremes (2024-12-09 31 and 2023-01-30 0.07) or span most of that range.",
+      "S12: Elliott is fractal. Emit macro pivots for the larger motive/corrective, or say in reason that this lock is the macro."
+    ],
+    "ms": 107421,
+    "promptTokens": 3248,
+    "completionTokens": 14678,
+    "calls": 2,
+    "error": null
+  },
+  "LTC-USD": {
+    "symbol": "LTC-USD",
+    "bars": 370,
+    "swings": 67,
+    "class": "flagged",
+    "pattern": "zigzag",
+    "reason": "weekly zigzag from ATH",
+    "violations": [
+      "F7: Wave + Fib are one proof. Off-catalog or unmeasured: B/A 227.1% off-catalog; C/A 111.4% off-catalog.",
+      "S5: Map is a local sketch. Label both working-range extremes (2021-05-10 413.26 and 2020-02-17 12.31) or span most of that range.",
+      "S12: Elliott is fractal. Emit macro pivots for the larger motive/corrective, or say in reason that this lock is the macro."
+    ],
+    "ms": 57839,
+    "promptTokens": 3254,
+    "completionTokens": 9558,
+    "calls": 2,
+    "error": null
+  },
+  "MSFT": {
+    "symbol": "MSFT",
+    "bars": 164,
+    "swings": 2,
+    "class": "abstain",
+    "pattern": "unresolved",
+    "reason": "no valid three count",
+    "violations": [
+      "P1: no valid three count"
+    ],
+    "ms": 55212,
+    "promptTokens": 1932,
+    "completionTokens": 8785,
+    "calls": 2,
+    "error": null
+  },
+  "NEAR-USD": {
+    "symbol": "NEAR-USD",
+    "bars": 249,
+    "swings": 16,
+    "class": "flagged",
+    "pattern": "zigzag",
+    "reason": "weekly zigzag from low 0.7550",
+    "violations": [
+      "F7: Wave + Fib are one proof. Off-catalog or unmeasured: B/A 146.0% off-catalog; C/A 103.1%.",
+      "S12: Macro layer needs a full motive (1–5) or corrective (A-B-C) of the larger degree."
+    ],
+    "ms": 151086,
+    "promptTokens": 3262,
+    "completionTokens": 18350,
+    "calls": 2,
+    "error": null
+  },
+  "NVDA": {
+    "symbol": "NVDA",
+    "bars": 334,
+    "swings": 2,
+    "class": "abstain",
+    "pattern": "unresolved",
+    "reason": "no complete three-count",
+    "violations": [
+      "P1: no complete three-count"
+    ],
+    "ms": 62541,
+    "promptTokens": 1934,
+    "completionTokens": 7125,
+    "calls": 2,
+    "error": null
+  },
+  "OP-USD": {
+    "symbol": "OP-USD",
+    "bars": 227,
+    "swings": 83,
+    "class": "flagged",
+    "pattern": "zigzag",
+    "reason": "weekly zigzag from recent high",
+    "violations": [
+      "F7: Wave + Fib are one proof. Off-catalog or unmeasured: B/A 61.7%; C/A 146.8% off-catalog.",
+      "S12: Elliott is fractal. Emit macro pivots for the larger motive/corrective, or say in reason that this lock is the macro."
+    ],
+    "ms": 146754,
+    "promptTokens": 3270,
+    "completionTokens": 17149,
+    "calls": 2,
+    "error": null
+  },
+  "PEPE-USD": {
+    "symbol": "PEPE-USD",
+    "bars": 99,
+    "swings": 24,
+    "class": "flagged",
+    "pattern": "impulse",
+    "reason": "weekly impulse from swing 18",
+    "violations": [
+      "F7: Wave + Fib are one proof. Off-catalog or unmeasured: 2/1 99.7% off-catalog; 3/1 255.8%; 4/3 39.8%; 5/1 141.4% and 5/4 139.0% off-catalog.",
+      "S12: Elliott is fractal. Emit macro pivots for the larger motive/corrective, or say in reason that this lock is the macro."
+    ],
+    "ms": 110831,
+    "promptTokens": 3490,
+    "completionTokens": 14921,
+    "calls": 2,
+    "error": null
+  },
+  "POL-USD": {
+    "symbol": "POL-USD",
+    "bars": 93,
+    "swings": 14,
+    "class": "flagged",
+    "pattern": "zigzag",
+    "reason": "weekly zigzag from ATH",
+    "violations": [
+      "F7: Wave + Fib are one proof. Off-catalog or unmeasured: B/A 123.9% off-catalog; C/A 62.0%.",
+      "S12: Elliott is fractal. Emit macro pivots for the larger motive/corrective, or say in reason that this lock is the macro."
+    ],
+    "ms": 81829,
+    "promptTokens": 3242,
+    "completionTokens": 12566,
+    "calls": 2,
+    "error": null
+  },
+  "RENDER-USD": {
+    "symbol": "RENDER-USD",
+    "bars": 114,
+    "swings": 21,
+    "class": "flagged",
+    "pattern": "zigzag",
+    "reason": "weekly zigzag from recent high",
+    "violations": [
+      "S12: Elliott is fractal. Emit macro pivots for the larger motive/corrective, or say in reason that this lock is the macro."
+    ],
+    "ms": 80059,
+    "promptTokens": 3186,
+    "completionTokens": 11941,
+    "calls": 2,
+    "error": null
+  },
+  "SEI-USD": {
+    "symbol": "SEI-USD",
+    "bars": 50,
+    "swings": 3,
+    "class": "flagged",
+    "pattern": "zigzag",
+    "reason": "weekly zigzag from ATH",
+    "violations": [
+      "F7: Wave + Fib are one proof. Off-catalog or unmeasured: B/A 24.6% off-catalog; C/A 43.6%.",
+      "S12: Elliott is fractal. Emit macro pivots for the larger motive/corrective, or say in reason that this lock is the macro."
+    ],
+    "ms": 54122,
+    "promptTokens": 2030,
+    "completionTokens": 12294,
+    "calls": 2,
+    "error": null
+  },
+  "SHIB-USD": {
+    "symbol": "SHIB-USD",
+    "bars": 267,
+    "swings": 73,
+    "class": "flagged",
+    "pattern": "zigzag",
+    "reason": "weekly zigzag from recent high",
+    "violations": [
+      "F7: Wave + Fib are one proof. Off-catalog or unmeasured: B/A 93.9%; C/A 189.3% off-catalog.",
+      "S12: Elliott is fractal. Emit macro pivots for the larger motive/corrective, or say in reason that this lock is the macro."
+    ],
+    "ms": 72305,
+    "promptTokens": 3496,
+    "completionTokens": 15145,
+    "calls": 2,
+    "error": null
+  },
+  "SOL-USD": {
+    "symbol": "SOL-USD",
+    "bars": 319,
+    "swings": 29,
+    "class": "rejected",
+    "pattern": "impulse",
+    "reason": "weekly impulse",
+    "violations": [
+      "H2: Wave 4 overlaps wave 1 in a cash impulse.",
+      "S7: Waves 2 and 4 do not alternate (both deep or both shallow).",
+      "A1: Wave 4 overlapped wave 1. Name diagonal, triangle, or ABC — do not leave this as impulse."
+    ],
+    "ms": 65477,
+    "promptTokens": 3236,
+    "completionTokens": 15784,
+    "calls": 2,
+    "error": null
+  },
+  "SUI-USD": {
+    "symbol": "SUI-USD",
+    "bars": 157,
+    "swings": 28,
+    "class": "flagged",
+    "pattern": "impulse",
+    "reason": "weekly impulse wave 5",
+    "violations": [
+      "S5: Map is a local sketch. Label both working-range extremes (2024-12-30 5.3532 and 2023-10-23 0.1) or span most of that range.",
+      "S12: Elliott is fractal. Emit macro pivots for the larger motive/corrective, or say in reason that this lock is the macro."
+    ],
+    "ms": 75542,
+    "promptTokens": 3204,
+    "completionTokens": 18358,
+    "calls": 2,
+    "error": null
+  },
+  "TON-USD": {
+    "symbol": "TON-USD",
+    "bars": 100,
+    "swings": 14,
+    "class": "flagged",
+    "pattern": "zigzag",
+    "reason": "weekly zigzag from low",
+    "violations": [
+      "S12: Elliott is fractal. Emit macro pivots for the larger motive/corrective, or say in reason that this lock is the macro."
+    ],
+    "ms": 176662,
+    "promptTokens": 3108,
+    "completionTokens": 17461,
+    "calls": 2,
+    "error": null
+  },
+  "TRX-USD": {
+    "symbol": "TRX-USD",
+    "bars": 84,
+    "swings": 4,
+    "class": "flagged",
+    "pattern": "zigzag",
+    "reason": "weekly zigzag from low 0.04000",
+    "violations": [
+      "S12: Elliott is fractal. Emit macro pivots for the larger motive/corrective, or say in reason that this lock is the macro."
+    ],
+    "ms": 294505,
+    "promptTokens": 2100,
+    "completionTokens": 8041,
+    "calls": 2,
+    "error": null
+  },
+  "TSLA": {
+    "symbol": "TSLA",
+    "bars": 197,
+    "swings": 6,
+    "class": "flagged",
+    "pattern": "zigzag",
+    "reason": "weekly zigzag from 2010 low",
+    "violations": [
+      "S12: Macro layer needs a full motive (1–5) or corrective (A-B-C) of the larger degree."
+    ],
+    "ms": 105570,
+    "promptTokens": 2344,
+    "completionTokens": 10826,
+    "calls": 2,
+    "error": null
+  },
+  "UNI-USD": {
+    "symbol": "UNI-USD",
+    "bars": 319,
+    "swings": 40,
+    "class": "flagged",
+    "pattern": "zigzag",
+    "reason": "weekly zigzag from ATH",
+    "violations": [
+      "F7: Wave + Fib are one proof. Off-catalog or unmeasured: B/A 117.7% off-catalog; C/A 126.7%.",
+      "S5: Map is a local sketch. Label both working-range extremes (2021-05-03 45.104 and 2020-11-02 1.7618) or span most of that range.",
+      "S12: Macro layer needs a full motive (1–5) or corrective (A-B-C) of the larger degree."
+    ],
+    "ms": 62980,
+    "promptTokens": 3284,
+    "completionTokens": 12305,
+    "calls": 2,
+    "error": null
+  },
+  "XLM-USD": {
+    "symbol": "XLM-USD",
+    "bars": 370,
+    "swings": 34,
+    "class": "flagged",
+    "pattern": "zigzag",
+    "reason": "weekly zigzag from ATH",
+    "violations": [
+      "S5: Map is a local sketch. Label both working-range extremes (2021-05-10 0.79822 and 2020-07-27 0.01356) or span most of that range.",
+      "S12: Elliott is fractal. Emit macro pivots for the larger motive/corrective, or say in reason that this lock is the macro."
+    ],
+    "ms": 65247,
+    "promptTokens": 3306,
+    "completionTokens": 13374,
+    "calls": 2,
+    "error": null
+  },
+  "XRP-USD": {
+    "symbol": "XRP-USD",
+    "bars": 241,
+    "swings": 19,
+    "class": "flagged",
+    "pattern": "zigzag",
+    "reason": "weekly zigzag from low",
+    "violations": [
+      "F7: Wave + Fib are one proof. Off-catalog or unmeasured: B/A 181.1% off-catalog; C/A 75.8%.",
+      "S5: Map is a local sketch. Label both working-range extremes (2025-07-14 3.6616 and 2019-11-25 0.06) or span most of that range.",
+      "S12: Macro layer needs a full motive (1–5) or corrective (A-B-C) of the larger degree."
+    ],
+    "ms": 55367,
+    "promptTokens": 3260,
+    "completionTokens": 12636,
+    "calls": 2,
+    "error": null
+  }
+}
