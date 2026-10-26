@@ -8,7 +8,9 @@
     "build": "tsc -b",
     "test": "vitest run",
     "wavecount": "tsc -b && node dist/cli.js",
-    "e2e": "tsc -b && node scripts/e2e.mjs"
+    "e2e": "tsc -b && node scripts/e2e.mjs",
+    "fetch-tapes": "node scripts/fetch-tapes.mjs",
+    "measure": "tsc -b && node scripts/measure-blueprints.mjs"
   },
   "devDependencies": {
     "@types/node": "^22.0.0",
